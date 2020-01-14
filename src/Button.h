@@ -3,7 +3,7 @@
 class Button : public ClickButton
 {
   public:
-    Button(uint8_t buttonPin, uint8_t ledPin, String name);
+    Button(uint8_t buttonPin, uint8_t ledPin, String name, void (*callback)(String text));
     void Update();
     void Switch();
 private:
@@ -11,5 +11,6 @@ private:
     String _name;
     int _clickcount;    
     boolean _ledState;
+    void (*_cb) (String text);
 };
 
