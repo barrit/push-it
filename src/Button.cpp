@@ -2,7 +2,7 @@
 
 Button::Button(uint8_t buttonPin, uint8_t ledPin, String name, void (*callback)(String text)) : 
             ClickButton(buttonPin, LOW, CLICKBTN_PULLUP) {
-    _cb = callback;
+    _callback = callback;
     _ledpin = ledPin;
     _name = name;
     _clickcount = 0;
@@ -21,16 +21,12 @@ void Button::Update() {
 
   if(_clickcount == 1) {
         Switch();
-        Particle.publish("SINGLE click", PRIVATE);
+        _callback(_name);
   } 
-  if(_clickcount == 2) _cb(_name + " doubleclick");
-  if(_clickcount == 3) Particle.publish("TRIPLE click", PRIVATE);
+  if(_clickcount == 2) Particle.publish("DOUBLE click", PRIVATE);
   if(_clickcount == -1) {
         Particle.publish("SINGLE LONG click", PRIVATE);
   } 
-  if(_clickcount == -2) Particle.publish("DOUBLE LONG click", PRIVATE);
-  if(_clickcount == -3) Particle.publish("TRIPLE LONG click", PRIVATE);
-
   _clickcount = 0;
 }
 

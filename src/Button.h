@@ -11,6 +11,6 @@ private:
     String _name;
     int _clickcount;    
     boolean _ledState;
-    void (*_cb) (String text);
+    void (*_callback) (String text);
 };
 
