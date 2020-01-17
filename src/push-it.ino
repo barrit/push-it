@@ -13,7 +13,7 @@ Flipper Flip(D1, Flipped);
 
 const String _hueIp = "192.168.1.156";
 const String _hueClient = "";
-const String _hueLamp = "7";
+String _hueLamp = "7";
 
 HttpClient http;
 
@@ -28,6 +28,7 @@ http_response_t response;
 void setup()
 {
   Particle.publish("Push it", PRIVATE);
+  Particle.function("SetLampId", SetLampId);
 }
 
 void loop()
@@ -112,4 +113,9 @@ void SetColor(int r, int g, int b ) {
   float y = Y / (X + Y + Z);
   Particle.publish(String("x: " + String(x) + " y: " + String(y)), PRIVATE);
   HueState("{\"xy\":[" + String(x) + "," + String(y) +"]}"); 
+}
+
+int SetLampId(String lampId) {
+  _hueLamp = lampId;
+  return 0;
 }
